@@ -5,9 +5,9 @@ void Hello_world()
     std::cout << "Hello, World" << std::endl;
 }
 
-void sum(int a, int b)
+void sum(int a, int b, int d)
 {
-    int c = a + b;
+    int c = a + b + d;
     std::cout << c << std::endl;
 }
 
@@ -28,7 +28,7 @@ int add(int a, int b)
 int main()
 {
     Hello_world();
-    sum(3, 4);
+    sum(3, 4, 5);
     int x = add(10, 20);
     show_value(x);
 }
