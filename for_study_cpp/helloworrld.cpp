@@ -1,7 +1,7 @@
 #include <iostream>
 
+// main関数は{}の間に関数を書く
 int main()
 {
-	// Hello Worldと出力
-	std::cout << "Hello World" << std::endl;
+	std::cout << "Hello, World" << std::endl;
 }
