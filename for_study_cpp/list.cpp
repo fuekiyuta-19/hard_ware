@@ -18,7 +18,6 @@ void char_raw()
     array[4] = 'y';
     array[5] = '\0';
     std::cout << hello  << array << std::endl;
-
 }
 
 int main()
