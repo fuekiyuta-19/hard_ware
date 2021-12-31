@@ -21,6 +21,7 @@ void product::set_value(int new_id)
 
 int main()
 {
-    const product cp{};
+    class product cp{};
+
     std::cout << cp.get_id() << std::endl;
 }
