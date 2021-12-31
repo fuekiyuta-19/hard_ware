@@ -8,6 +8,7 @@ class person
 
 public:
     person();
+    ~person();
 
     void set_name(std::string name);
     void set_age(int age);
@@ -19,7 +20,13 @@ public:
 //person class内のageを-1と初期化
 person::person() : m_age(-1)
 {
-    std::cout << "Called from constructer" << std::endl;
+    std::cout << "Called constructer function" << std::endl;
+}
+
+//main関数終了後、関数の定義を消去
+person::~person()
+{
+    std::cout << "Called deconstructer function" << std::endl;
 }
 
 void person::set_name(std::string name)
@@ -51,5 +58,5 @@ int main()
     bob.set_age(20);
     std::cout << "Name is " << bob.name() << std::endl;
     std::cout << "Age is " << bob.age() << std::endl;
-
+    std::cout << "Finish main function" << std::endl;
 }
