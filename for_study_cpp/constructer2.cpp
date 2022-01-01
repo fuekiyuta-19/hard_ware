@@ -57,6 +57,8 @@ int person::age() const
 
 int main()
 {
-    person alice("ailce", 15);
+    // person alice("ailce", 15);
+    person alice;
     std::cout << alice.name() << std::endl;
+    std::cout << alice.age() << std::endl;
 }
