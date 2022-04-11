@@ -1,0 +1,9 @@
+unsigned int msg_dec = 0;
+unsigned int msg_hex;
+for (int i = 0, size = msg.size() ; i < size ; ++i){
+    msg_dec *= 2;
+    msg_dec += ((int)msg[i] == 49) ? 1 : 0;
+}
+std::ostringstream oss;
+oss << msg_dec;
+msg_hex = std::stoi(oss.str());
