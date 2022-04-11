@@ -45,4 +45,17 @@ int main(){
 
     }
     std::cout << std::endl;
+
+    std::string stre;
+    stre = std::string{"Java"};
+    std::cout << stre << std::endl;
+
+    stre = "python";
+    std::cout << stre << std::endl;
+
+    stre = 'C';
+    std::cout << stre << std::endl;
+
+    stre = {'C', '+', '+'};
+    std::cout << stre << std::endl;
 }
