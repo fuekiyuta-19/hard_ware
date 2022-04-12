@@ -1,8 +1,6 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <stdio.h>
-#include <stdlib.h>
 #include <cmath>
 
 class sumple_msg{
