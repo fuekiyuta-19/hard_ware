@@ -155,38 +155,34 @@ private:
 			
 			i++;
 		  
-
 		  }/*END:  if(read(fd, &buf, 1))*/
 		
 		}/*END:   while(1)*/
 
 		status = data[0];
-
-		tmp_data[0] = data.substr(10, 4);
 		
-		msg.ang_yaw = -(tmp_data[0] * 180.0) / 32767;
+		msg.ang_yaw = -(data.substr(10, 4) * 180.0) / 32767;
+		msg.acc_yaw = -(data.substr(6, 4) * 180.0) / 32767;
 
-		for(j=0;j<3;j++){
-		  tmp_data[j] = ((data[j*2+7]<<7) + (data[j*2+8]>>1)) * 2;
-		}
-		msg.vel_roll = -(tmp_data[0] * 200.0) / 32767;
-		msg.vel_pitch = -(tmp_data[1] * 200.0) / 32767;
-		msg.vel_yaw = -(tmp_data[2] * 200.0) / 32767;
+		// for(j=0;j<3;j++){
+		//   tmp_data[j] = ((data[j*2+7]<<7) + (data[j*2+8]>>1)) * 2;
+		// }
+		// msg.vel_roll = -(tmp_data[0] * 200.0) / 32767;
+		// msg.vel_pitch = -(tmp_data[1] * 200.0) / 32767;
+		// msg.vel_yaw = -(tmp_data[2] * 200.0) / 32767;
 
-		for(j=0;j<3;j++){
-		  tmp_data[j] = ((data[j*2+13]<<7) + (data[j*2+14]>>1)) * 2;
-		}
-		msg.acc_surge = -(tmp_data[0] * 12.0) / 32767;
-		msg.acc_sway = -(tmp_data[1] * 12.0) / 32767;
-		msg.acc_heave = -(tmp_data[2] * 12.0) / 32767;
-
+		// for(j=0;j<3;j++){
+		//   tmp_data[j] = ((data[j*2+13]<<7) + (data[j*2+14]>>1)) * 2;
+		// }
+		// msg.acc_surge = -(tmp_data[0] * 12.0) / 32767;
+		// msg.acc_sway = -(tmp_data[1] * 12.0) / 32767;
+		// msg.acc_heave = -(tmp_data[2] * 12.0) / 32767;
 
 		/* Substitute Class Variables */
 		mtx_.lock();
 		gyro_msg_ = msg;
 		mtx_.unlock();
 	  
-
 	  }/*END: if(dle == false)*/
 	  
 	}/*END: while(ros::ok())*/
@@ -198,16 +194,15 @@ private:
 	while(ros::ok()){
 	  mtx_.lock();
 	  pub_.publish(gyro_msg_);
-	  ROS_INFO("[ANG] ROLL :%f, PITCH:%f, YAW  :%f",gyro_msg_.ang_roll, gyro_msg_.ang_pitch, gyro_msg_.ang_yaw);
-	  ROS_INFO("[VEL] ROLL :%f, PITCH:%f, YAW  :%f",gyro_msg_.vel_roll, gyro_msg_.vel_pitch, gyro_msg_.vel_yaw);
-	  ROS_INFO("[ACC] SURGE:%f, SWAY :%f, HEAVE:%f\n",gyro_msg_.acc_surge, gyro_msg_.acc_sway, gyro_msg_.acc_heave);
+	  ROS_INFO("[ANG] YAW :%f, [ACC] YAW :%f,gyro_msg_.ang_yaw, gyro_msg_.acc_yaw);
+	//   ROS_INFO("[VEL] ROLL :%f, PITCH:%f, YAW  :%f",gyro_msg_.vel_roll, gyro_msg_.vel_pitch, gyro_msg_.vel_yaw);
+	//   ROS_INFO("[ACC] SURGE:%f, SWAY :%f, HEAVE:%f\n",gyro_msg_.acc_surge, gyro_msg_.acc_sway, gyro_msg_.acc_heave);
 	  mtx_.unlock();
 
 	  loop_rate.sleep();
 	}
 	
   }//END: This Method
-
   
 };
 
