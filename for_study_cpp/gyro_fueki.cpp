@@ -11,7 +11,7 @@
 #include <termios.h>
 #include <unistd.h> /*read()*/
 
-#define DEV_NAME "/dev/ttyUSB0"
+#define DEV_NAME "/dev/gyro"
 #define BAUD_RATE_IN B1200
 #define BAUD_RATE_OUT B1200
 #define BUFF_SIZE 70
