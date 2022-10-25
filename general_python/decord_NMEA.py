@@ -3,17 +3,9 @@ import matplotlib.pyplot as plt
 import math
 import numpy as np
 
-from subroutine import font_set, conversion, read_nmea
+from subroutine import font_set, conversion, read_nmea, surrounding
 
 data = pd.read_csv("general_python/datalist/20221018_split.csv").values
-
-berth_df = pd.read_csv('general_python/datalist/berth_xy.csv')
-berth_x  = berth_df['x [m]'].values
-berth_y  = berth_df['y [m]'].values
-
-surroundings_df = pd.read_csv('general_python/datalist/surroundings_xy.csv')
-surroundings_x  = surroundings_df['x [m]'].values
-surroundings_y  = surroundings_df['y [m]'].values
 
 X = read_nmea.read_GGA_VTG(data)[0]
 Y = read_nmea.read_GGA_VTG(data)[1]
