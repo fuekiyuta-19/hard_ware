@@ -8,8 +8,21 @@ filepath = "general_python/datalist/"
 dataname = ["TM_TAKAOKI_NNberthing_time_25-Oct-2022_13_38_49",
             "TM_TAKAOKI_NNberthing_time_25-Oct-2022_13_42_05",
             "TM_TAKAOKI_NNberthing_time_25-Oct-2022_13_45_18",
-            "TM_TAKAOKI_NNberthing_time_25-Oct-2022_13_47_37"]
-datanum = 2
+            "TM_TAKAOKI_NNberthing_time_25-Oct-2022_13_47_37",
+            "TAKAOKI_swaytime_26-Oct-2022_16_28_30",
+            "TAKAOKI_swaytime_26-Oct-2022_16_33_45",
+            "TAKAOKI_swaytime_26-Oct-2022_16_40_11", 
+            "TAKAOKI_swaytime_26-Oct-2022_16_42_51",
+            "TAKAOKI_swaytime_26-Oct-2022_16_46_44", 
+            "TAKAOKI_swaytime_26-Oct-2022_16_47_23",
+            "TAKAOKI_swaytime_26-Oct-2022_16_49_18",
+            "TAKAOKI_swaytime_26-Oct-2022_16_49_44",
+            "TAKAOKI_swaytime_26-Oct-2022_16_50_07", 
+            "TAKAOKI_swaytime_26-Oct-2022_17_02_02",
+            "TAKAOKI_swaytime_26-Oct-2022_17_05_19",
+            "TAKAOKI_swaytime_26-Oct-2022_17_10_19"] 
+
+datanum = 6
 data = pd.read_csv(filepath + dataname[datanum] + ".csv")
 
 fig = plt.figure(figsize = (15.2, 9.6), dpi = 100, linewidth = 0, edgecolor = 'w')
