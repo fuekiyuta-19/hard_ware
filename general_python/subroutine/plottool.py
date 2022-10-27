@@ -24,8 +24,8 @@ def ship_shape(x, y, psi, ship_type) : # 0:esso, 1:takaoki
         breadth = esso_breadth
         
     elif ship_type == 1 :
-        lpp       = takaoki_lpp
-        breadth   = takaoki_breadth
+        lpp     = takaoki_lpp
+        breadth = takaoki_breadth
 
     shipshape_Y   = np.array([-lpp / 2, lpp / 4, lpp / 2, lpp / 4, -lpp / 2, -lpp / 2])
     shipshape_X   = np.array([-breadth / 2, -breadth / 2, 0, breadth / 2, breadth / 2, -breadth / 2])
@@ -36,5 +36,23 @@ def ship_shape(x, y, psi, ship_type) : # 0:esso, 1:takaoki
 
     x_fix = np.cos(pole_theta[:] + psi) * pole_r[:] + x
     y_fix = np.sin(pole_theta[:] + psi) * pole_r[:] + y
+
+    return x_fix, y_fix
+
+def ship_shape_dist(dist, psi):
+    pp_takaoki_CSV  = pd.read_csv('general_python/datalist/input_CSV_VR/principal_particulars_cement.csv', index_col = 0)
+
+    lpp = pp_takaoki_CSV.at['lpp', 'value']
+    bre = pp_takaoki_CSV.at['breadth', 'value']
+
+    shipshape_Y   = np.array([-lpp / 2,  lpp / 4, lpp / 2, lpp / 4, -lpp / 2, -lpp / 2])
+    shipshape_X   = np.array([-bre / 2, -bre / 2, 0,       bre / 2, bre / 2,  -bre / 2])
+    pole_r        = np.empty(6)
+    pole_theta    = np.empty(6)
+    pole_r[:]     = (shipshape_X[:] ** 2 + shipshape_Y[:] ** 2) ** (1 / 2)
+    pole_theta[:] = np.arctan2(shipshape_Y[:], shipshape_X[:])
+
+    x_fix = np.cos(pole_theta[:] + psi) * pole_r[:] + (dist + 0.165) * np.cos(psi)
+    y_fix = np.sin(pole_theta[:] + psi) * pole_r[:]
 
     return x_fix, y_fix
