@@ -10,6 +10,7 @@ data = pd.read_csv("general_python/datalist/20221018_split.csv").values
 X = read_nmea.read_GGA_VTG(data)[0]
 Y = read_nmea.read_GGA_VTG(data)[1]
 
+font_set.fig_eekanji()
 fig = plt.figure(figsize = (15.2, 9.6), dpi = 100, linewidth = 0, edgecolor = 'w')
 ax1 = fig.add_subplot(1, 1, 1)
 ax1.scatter(X, Y)

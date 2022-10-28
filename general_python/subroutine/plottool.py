@@ -46,13 +46,13 @@ def ship_shape_dist(dist, psi):
     bre = pp_takaoki_CSV.at['breadth', 'value']
 
     shipshape_Y   = np.array([-lpp / 2,  lpp / 4, lpp / 2, lpp / 4, -lpp / 2, -lpp / 2])
-    shipshape_X   = np.array([-bre / 2, -bre / 2, 0,       bre / 2, bre / 2,  -bre / 2])
+    shipshape_X   = np.array([-bre / 2, -bre / 2,    0,    bre / 2,  bre / 2, -bre / 2])
     pole_r        = np.empty(6)
     pole_theta    = np.empty(6)
     pole_r[:]     = (shipshape_X[:] ** 2 + shipshape_Y[:] ** 2) ** (1 / 2)
     pole_theta[:] = np.arctan2(shipshape_Y[:], shipshape_X[:])
 
-    x_fix = np.cos(pole_theta[:] + psi) * pole_r[:] + (dist + 0.165) * np.cos(psi)
+    x_fix = np.cos(pole_theta[:] + psi) * pole_r[:] - (dist + 0.165) * np.cos(psi)
     y_fix = np.sin(pole_theta[:] + psi) * pole_r[:]
 
     return x_fix, y_fix
