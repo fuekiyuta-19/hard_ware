@@ -11,8 +11,10 @@ from subroutine import font_set, plottool
 filepath = "general_python/datalist/20221028/"
 dataname = glob.glob(filepath + "*.csv")
 
-datanum = k
+
+datanum = 7
 data = pd.read_csv(dataname[datanum])
+print(dataname[datanum])
 
 berth = np.full(len(data), -0.24215)
 
@@ -26,8 +28,6 @@ for i in range(len(data)):
 
 font_set.fig_eekanji()
 
-fig1name = dataname[datanum].replace(filepath, '')
-pdf1 = PdfPages(filepath + "png/" + "plot_" + fig1name.replace('.csv', '.pdf'))
 fig1 = plt.figure(figsize = (10.2, 6.6), dpi = 100, linewidth = 0, edgecolor = 'w')
 
 ax1 = fig1.add_subplot(1, 2, 1)
@@ -36,8 +36,8 @@ ax3 = fig1.add_subplot(3, 2, 4)
 ax4 = fig1.add_subplot(3, 2, 6)
 
 for j in range(len(data)):
-    if j % 50 == 0:
-        X, Y = plottool.ship_shape(data['y_filter'].values[j], data['x_filter'].values[j], data['psi_filter'].values[j], 1)
+    if j % 10 == 0:
+        X, Y = plottool.ship_shape(data['x_filter'].values[j], data['y_filter'].values[j], data['psi_filter'].values[j], 1)
         # X, Y = plottool.ship_shape_dist(data['dist_m_lidar_ma'].values[j], data['psi_raw_rad'].values[j])
         ax1.plot(X, Y - 10, color = "r", linestyle = "-", lw = 0.5)
     else:
@@ -80,8 +80,6 @@ ax4.set_ylim(-30, 30)
 
 plt.show()
 
-fig2name = dataname[datanum].replace(filepath, '')
-pdf2 = PdfPages(filepath + "png/" + "state_" + fig2name.replace('.csv', '.pdf'))
 fig2 = plt.figure(figsize = (10.2, 6.6), dpi = 100, linewidth = 0, edgecolor = 'w')
 ax1 = fig2.add_subplot(3, 2, 1)
 ax2 = fig2.add_subplot(3, 2, 2)
@@ -105,10 +103,10 @@ ax2.set_ylabel("$u~ [\mathrm{m/s}]$", fontsize = 20)
 ax2.set_xlim(0, len(data) / 10)
 ax2.axvline(x = flag, color = 'black')
 
-# ax3.plot(data['time'].values, data['y_filter'].values, color = "r")
-# ax3.plot(data['time'].values, berth, linewidth = 1.0, linestyle = "dashed", label = "$\mathrm{Berth}$", color = "black")
-ax3.plot(data['time'].values, data['dist_m_lidar_ma'].values, color = "blue")
-ax3.plot(data['time'].values, -berth, linewidth = 1.0, linestyle = "dashed", label = "$\mathrm{Berth}$", color = "black")
+ax3.plot(data['time'].values, data['y_filter'].values, color = "r")
+ax3.plot(data['time'].values, berth, linewidth = 1.0, linestyle = "dashed", label = "$\mathrm{Berth}$", color = "black")
+# ax3.plot(data['time'].values, data['dist_m_lidar_ma'].values, color = "blue")
+# ax3.plot(data['time'].values, -berth, linewidth = 1.0, linestyle = "dashed", label = "$\mathrm{Berth}$", color = "black")
 ax3.set_ylabel("$Y~ [\mathrm{m}]$", fontsize = 20)
 ax3.set_xlim(0, len(data) / 10)
 # ax3.set_yticks([-1.2, -0.8, -0.4, 0.0])
@@ -120,6 +118,7 @@ ax4.plot(data['time'].values, data['velo_ms_lidar_ma'].values, color = "blue")
 ax4.plot(data['time'].values, data['vm_filter'].values, color = "r")
 ax4.set_ylabel("$v_{m}~ [\mathrm{m/s}]$", fontsize = 20)
 ax4.set_xlim(0, len(data) / 10)
+ax4.set_ylim(-0.3, 1)
 ax4.axhspan(-0.2, 0.011, color = "gray", alpha = 0.2, label = "$\mathrm{Safe~ Speed}$")
 ax4.axvline(x = flag, color = 'black')
 # ax4.legend(font_size = 20)
@@ -138,5 +137,3 @@ ax6.axvline(x = flag, color = 'black')
 ax6.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 20)
 
 plt.show()
-
-

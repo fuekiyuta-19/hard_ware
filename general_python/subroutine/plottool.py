@@ -12,6 +12,7 @@ def env():
 
     return berth_x, berth_y, surroundings_x, surroundings_y
 
+
 def ship_shape(x, y, psi, ship_type) : # 0:esso, 1:takaoki
     pp_takaoki_CSV  = pd.read_csv('general_python/datalist/input_CSV_VR/principal_particulars_cement.csv', index_col = 0)
     esso_lpp        = 3.0
@@ -27,17 +28,18 @@ def ship_shape(x, y, psi, ship_type) : # 0:esso, 1:takaoki
         lpp     = takaoki_lpp
         breadth = takaoki_breadth
 
-    shipshape_Y   = np.array([-lpp / 2, lpp / 4, lpp / 2, lpp / 4, -lpp / 2, -lpp / 2])
-    shipshape_X   = np.array([-breadth / 2, -breadth / 2, 0, breadth / 2, breadth / 2, -breadth / 2])
+    shipshape_X   = np.array([-lpp / 2, lpp / 4, lpp / 2, lpp / 4, -lpp / 2, -lpp / 2])
+    shipshape_Y   = np.array([-breadth / 2, -breadth / 2, 0, breadth / 2, breadth / 2, -breadth / 2])
     pole_r        = np.empty(6)
     pole_theta    = np.empty(6)
-    pole_r[:]     = (shipshape_X[:] ** 2 + shipshape_Y[:] ** 2) ** (1 / 2)
-    pole_theta[:] = np.arctan2(shipshape_Y[:],shipshape_X[:])
+    pole_r[:]     = (shipshape_Y[:] ** 2 + shipshape_X[:] ** 2) ** (1 / 2)
+    pole_theta[:] = np.arctan2(shipshape_X[:], shipshape_Y[:])
 
-    x_fix = np.cos(pole_theta[:] + psi) * pole_r[:] + x
-    y_fix = np.sin(pole_theta[:] + psi) * pole_r[:] + y
+    y_fix = np.cos(pole_theta[:] + psi) * pole_r[:] + y
+    x_fix = np.sin(pole_theta[:] + psi) * pole_r[:] + x
 
     return x_fix, y_fix
+
 
 def ship_shape_dist(dist, psi):
     pp_takaoki_CSV  = pd.read_csv('general_python/datalist/input_CSV_VR/principal_particulars_cement.csv', index_col = 0)
