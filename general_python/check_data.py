@@ -12,7 +12,7 @@ filepath = "general_python/datalist/20221028/"
 dataname = glob.glob(filepath + "*.csv")
 
 
-datanum = 7
+datanum = 5
 data = pd.read_csv(dataname[datanum])
 print(dataname[datanum])
 
@@ -36,19 +36,20 @@ ax3 = fig1.add_subplot(3, 2, 4)
 ax4 = fig1.add_subplot(3, 2, 6)
 
 for j in range(len(data)):
-    if j % 10 == 0:
+    if j % 30 == 0:
         X, Y = plottool.ship_shape(data['x_filter'].values[j], data['y_filter'].values[j], data['psi_filter'].values[j], 1)
         # X, Y = plottool.ship_shape_dist(data['dist_m_lidar_ma'].values[j], data['psi_raw_rad'].values[j])
-        ax1.plot(X, Y - 10, color = "r", linestyle = "-", lw = 0.5)
+        ax1.plot(X, Y, color = "r", linestyle = "-", lw = 0.5)
     else:
         pass
 
+# ax1.plot(data['x_filter'].values, data['y_filter'].values)
 ax1.plot(plottool.env()[3], plottool.env()[2], color = 'k', linestyle = "-", lw = 0.5)
 ax1.plot(plottool.env()[1], plottool.env()[0], color = 'k', linestyle = '-', lw = 0.5)
 ax1.fill_between(plottool.env()[3], plottool.env()[2], facecolor = 'k', alpha = 0.3)
 ax1.fill_between(plottool.env()[1], plottool.env()[0], facecolor = 'k', alpha = 0.3)
-ax1.set_xlim(-5, 5)
-ax1.set_ylim(-15, -5)
+ax1.set_xlim(-10, 5)
+ax1.set_ylim(-10, 5)
 ax1.set_aspect('equal')
 
 ax2.plot(data['time'].values, data['rudder_left_RC'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
