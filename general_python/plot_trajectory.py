@@ -13,7 +13,7 @@ filepath = "general_python/datalist/20221028/"
 dataname = glob.glob(filepath + "*.csv")
 
 for k in range(len(dataname)):
-    print(k, " / ", len(dataname))
+    print(k + 1, " / ", len(dataname))
     datanum = k
     data = pd.read_csv(dataname[datanum])
 
@@ -42,7 +42,7 @@ for k in range(len(dataname)):
         if j % 50 == 0:
             X, Y = plottool.ship_shape(data['y_filter'].values[j], data['x_filter'].values[j], data['psi_filter'].values[j], 1)
             # X, Y = plottool.ship_shape_dist(data['dist_m_lidar_ma'].values[j], data['psi_raw_rad'].values[j])
-            ax1.plot(X, Y - 10, color = "r", linestyle = "-", lw = 0.5)
+            ax1.plot(X, Y, color = "r", linestyle = "-", lw = 0.5)
         else:
             pass
 
@@ -50,8 +50,8 @@ for k in range(len(dataname)):
     ax1.plot(plottool.env()[1], plottool.env()[0], color = 'k', linestyle = '-', lw = 0.5)
     ax1.fill_between(plottool.env()[3], plottool.env()[2], facecolor = 'k', alpha = 0.3)
     ax1.fill_between(plottool.env()[1], plottool.env()[0], facecolor = 'k', alpha = 0.3)
-    ax1.set_xlim(-5, 5)
-    ax1.set_ylim(-15, -5)
+    ax1.set_xlim(-10, 5)
+    ax1.set_ylim(-10, 5)
     ax1.set_aspect('equal')
 
     ax2.plot(data['time'].values, data['rudder_left_RC'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
