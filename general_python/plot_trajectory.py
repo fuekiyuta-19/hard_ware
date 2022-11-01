@@ -13,7 +13,7 @@ filepath = "general_python/datalist/20221028/"
 dataname = glob.glob(filepath + "*.csv")
 
 for k in range(len(dataname)):
-    print(k)
+    print(k, " / ", len(dataname))
     datanum = k
     data = pd.read_csv(dataname[datanum])
 
@@ -24,6 +24,7 @@ for k in range(len(dataname)):
         if data['automode'].values[i] == 0:
             flag += 0.1
         else:
+            x_ref = data['x_filter'].values[i]
             break
 
     font_set.fig_eekanji()
@@ -39,8 +40,8 @@ for k in range(len(dataname)):
 
     for j in range(len(data)):
         if j % 50 == 0:
-            X, Y = plottool.ship_shape(data['y_raw'].values[j], data['x_raw'].values[j], np.rad2deg(data['psi_raw_rad'].values[j]), 1)
-            # X, Y = plottool.ship_shape_dist(data['dist_m_lidar_ma'].values[j], np.rad2deg(data['psi_raw_rad'].values[j]))
+            X, Y = plottool.ship_shape(data['y_filter'].values[j], data['x_filter'].values[j], data['psi_filter'].values[j], 1)
+            # X, Y = plottool.ship_shape_dist(data['dist_m_lidar_ma'].values[j], data['psi_raw_rad'].values[j])
             ax1.plot(X, Y - 10, color = "r", linestyle = "-", lw = 0.5)
         else:
             pass
@@ -93,46 +94,48 @@ for k in range(len(dataname)):
     ax5 = fig2.add_subplot(3, 2, 5)
     ax6 = fig2.add_subplot(3, 2, 6)
 
-    ax1.plot(data['time'].values, data['x_raw'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
+    ax1.plot(data['time'].values, data['x_filter'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
     ax1.set_ylabel("$X~ [\mathrm{m}]$", fontsize = 20)
     ax1.yaxis.set_major_formatter(ptick.ScalarFormatter(useMathText=True))   # こっちを先に書くこと。
     ax1.ticklabel_format(style="sci", axis="y", scilimits=(3,-3))   # 10^3単位の指数で表示する。
     ax1.set_xlim(0, len(data) / 10)
     ax1.axvline(x = flag, color = 'black')
+    ax1.axhline(y = x_ref, color = 'black')
     # ax1.set_yticks([ -0.06, -0.03, 0, 0.03])
 
 
-    ax2.plot(data['time'].values, data['u_dop_raw'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
+    ax2.plot(data['time'].values, data['u_filter'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
     ax2.set_ylabel("$u~ [\mathrm{m/s}]$", fontsize = 20)
     ax2.set_xlim(0, len(data) / 10)
     ax2.axvline(x = flag, color = 'black')
 
-    ax3.plot(data['time'].values, data['y_raw'].values, color = "r")
+    # ax3.plot(data['time'].values, data['y_filter'].values, color = "r")
+    # ax3.plot(data['time'].values, berth, linewidth = 1.0, linestyle = "dashed", label = "$\mathrm{Berth}$", color = "black")
+    ax3.plot(data['time'].values, data['dist_m_lidar_ma'].values, color = "blue")
+    ax3.plot(data['time'].values, -berth, linewidth = 1.0, linestyle = "dashed", label = "$\mathrm{Berth}$", color = "black")
     ax3.set_ylabel("$Y~ [\mathrm{m}]$", fontsize = 20)
     ax3.set_xlim(0, len(data) / 10)
-    ax3.plot(data['time'].values, berth, linewidth = 1.0, linestyle = "dashed", label = "$\mathrm{Berth}$", color = "black")
-    ax3.set_yticks([-1.2, -0.8, -0.4, 0.0])
-    ax3.set_ylim(-1.2, 0)
+    # ax3.set_yticks([-1.2, -0.8, -0.4, 0.0])
+    # ax3.set_ylim(-1.2, 0)
     ax3.axvline(x = flag, color = 'black')
     # ax3.legend(fontsize = 20)
 
-    ax4.plot(data['time'].values, data['dist_m_lidar_ma'].values, color = "r")
+    ax4.plot(data['time'].values, data['velo_ms_lidar_ma'].values, color = "blue")
+    ax4.plot(data['time'].values, data['vm_filter'].values, color = "r")
     ax4.set_ylabel("$v_{m}~ [\mathrm{m/s}]$", fontsize = 20)
     ax4.set_xlim(0, len(data) / 10)
-    ax4.yaxis.set_major_formatter(ptick.ScalarFormatter(useMathText=True))  
-    ax4.ticklabel_format(style="sci", axis="y", scilimits=(3,-3))  
-    ax4.axhspan(-1, 0.011, color="gray", alpha=0.2, label = "$\mathrm{Safe~ Speed}$")
+    ax4.axhspan(-0.2, 0.011, color = "gray", alpha = 0.2, label = "$\mathrm{Safe~ Speed}$")
     ax4.axvline(x = flag, color = 'black')
     # ax4.legend(font_size = 20)
 
-    ax5.plot(data['time'].values, np.rad2deg(data['psi_raw_rad'].values), label = "Without referense speed", color = "r")
+    ax5.plot(data['time'].values, np.rad2deg(data['psi_filter'].values), label = "Without referense speed", color = "r")
     ax5.set_ylabel("$\psi~ [\mathrm{deg.}]$", fontsize = 20)
     ax5.set_xlim(0, len(data) / 10)
     ax5.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 20)
     ax5.axvline(x = flag, color = 'black')
     # ax5.legend(fontsize = 17)
 
-    ax6.plot(data['time'].values, np.rad2deg(data['r_raw_rad'].values), label = "Without referense speed", color = "r")
+    ax6.plot(data['time'].values, np.rad2deg(data['r_filter'].values), label = "Without referense speed", color = "r")
     ax6.set_ylabel("$r~ [\mathrm{deg./s}]$", fontsize = 20)
     ax6.set_xlim(0, len(data) / 10)
     ax6.axvline(x = flag, color = 'black')
