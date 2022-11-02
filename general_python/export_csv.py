@@ -1,7 +1,7 @@
 import pandas as pd
 import glob
 
-filepath = "general_python/datalist/20221028/"
+filepath = "general_python/datalist/20221102/"
 dataname = glob.glob(filepath + "*.xlsx")
 
 for i in range(len(dataname)):

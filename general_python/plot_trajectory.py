@@ -1,13 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib import pyplot
 import matplotlib.ticker as ptick
 from matplotlib.backends.backend_pdf import PdfPages
+from matplotlib import pyplot
 import numpy as np
 import glob
 
 from subroutine import font_set, plottool
-
 
 filepath = "general_python/datalist/20221028/"
 dataname = glob.glob(filepath + "*.csv")

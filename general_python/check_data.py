@@ -12,7 +12,7 @@ filepath = "general_python/datalist/20221028/"
 dataname = glob.glob(filepath + "*.csv")
 
 
-datanum = 5
+datanum = 8
 data = pd.read_csv(dataname[datanum])
 print(dataname[datanum])
 
@@ -106,7 +106,7 @@ ax2.axvline(x = flag, color = 'black')
 
 ax3.plot(data['time'].values, data['y_filter'].values, color = "r")
 ax3.plot(data['time'].values, berth, linewidth = 1.0, linestyle = "dashed", label = "$\mathrm{Berth}$", color = "black")
-# ax3.plot(data['time'].values, data['dist_m_lidar_ma'].values, color = "blue")
+ax3.plot(data['time'].values, -1 * ((data['dist_m_lidar_ma'].values -0.24) * np.cos(data['psi_filter'].values)), color = "blue")
 # ax3.plot(data['time'].values, -berth, linewidth = 1.0, linestyle = "dashed", label = "$\mathrm{Berth}$", color = "black")
 ax3.set_ylabel("$Y~ [\mathrm{m}]$", fontsize = 20)
 ax3.set_xlim(0, len(data) / 10)
