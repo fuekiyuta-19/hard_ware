@@ -8,22 +8,23 @@ import glob
 
 from subroutine import font_set, plottool
 
-filepath = "general_python/datalist/20221028/"
+filepath = "general_python/datalist/20221102/"
 dataname = glob.glob(filepath + "*.csv")
 
 
-datanum = 8
+datanum = 0
 data = pd.read_csv(dataname[datanum])
 print(dataname[datanum])
 
 berth = np.full(len(data), -0.24215)
 
-flag = 0
+flag  = 0
+x_ref = 0
 for i in range(len(data)):
     if data['automode'].values[i] == 0:
         flag += 0.1
     else:
-        x_ref = data['x_filter'].values[i]
+        x_ref += data['x_filter'].values[i]
         break
 
 font_set.fig_eekanji()
@@ -52,8 +53,8 @@ ax1.set_xlim(-10, 5)
 ax1.set_ylim(-10, 5)
 ax1.set_aspect('equal')
 
-ax2.plot(data['time'].values, data['rudder_left_RC'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
-# ax2.plot(data['time'].values, data['rudder_left_RC'].values, label = "$\mathrm{With~ referense~ speed}$", color = "b")
+# ax2.plot(data['time'].values, data['rudder_left_RC'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
+ax2.plot(data['time'].values, data['rudder_left_cmd'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
 # ax2.set_ylabel("$\delta_{\mathrm{p}~ [\mathrm{deg.}]$", fontsize = 31)
 ax2.set_xlim(0, len(data) / 10)
 ax2.set_ylim(-120, 0)
@@ -61,8 +62,8 @@ ax2.set_yticks([-100, -80, -60, -40, -20, 0])
 ax2.axvline(x = flag, color = 'black')
 # ax2.legend(fontsize = 20)
 
-ax3.plot(data['time'].values, data['rudder_right_RC'].values, label = "Without referense speed", color = "r")
-# ax3.plot(data['time'].values, data['rudder_right_RC'].values, label = "With referense speed", color = "b")
+# ax3.plot(data['time'].values, data['rudder_right_RC'].values, label = "Without referense speed", color = "r")
+ax3.plot(data['time'].values, data['rudder_right_cmd'].values, label = "With referense speed", color = "b")
 # ax3.set_ylabel("$\delta_{\mathrm{s}}~ [\mathrm{deg.}]$", fontsize = 31)
 ax3.set_ylim(0, 120)
 ax3.set_xlim(0, len(data) / 10)
@@ -79,7 +80,7 @@ ax4.set_yticks([-30, -15, 0, 15, 30])
 ax4.axvline(x = flag, color = 'black')
 ax4.set_ylim(-30, 30)
 
-plt.show()
+# plt.show()
 
 fig2 = plt.figure(figsize = (10.2, 6.6), dpi = 100, linewidth = 0, edgecolor = 'w')
 ax1 = fig2.add_subplot(3, 2, 1)
