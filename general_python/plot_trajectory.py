@@ -8,7 +8,7 @@ import glob
 
 from subroutine import font_set, plottool
 
-filepath = "general_python/datalist/20221028/"
+filepath = "general_python/datalist/20221102/"
 dataname = glob.glob(filepath + "*.csv")
 
 for k in range(len(dataname)):
@@ -53,8 +53,8 @@ for k in range(len(dataname)):
     ax1.set_ylim(-10, 5)
     ax1.set_aspect('equal')
 
-    ax2.plot(data['time'].values, data['rudder_left_RC'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
-    # ax2.plot(data['time'].values, data['rudder_left_RC'].values, label = "$\mathrm{With~ referense~ speed}$", color = "b")
+    # ax2.plot(data['time'].values, data['rudder_left_RC'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
+    ax2.plot(data['time'].values, data['rudder_left_cmd'].values, label = "$\mathrm{Without~ referense~ speed}$", color = "r")
     # ax2.set_ylabel("$\delta_{\mathrm{p}~ [\mathrm{deg.}]$", fontsize = 31)
     ax2.set_xlim(0, len(data) / 10)
     ax2.set_ylim(-120, 0)
@@ -62,8 +62,8 @@ for k in range(len(dataname)):
     ax2.axvline(x = flag, color = 'black')
     # ax2.legend(fontsize = 20)
 
-    ax3.plot(data['time'].values, data['rudder_right_RC'].values, label = "Without referense speed", color = "r")
-    # ax3.plot(data['time'].values, data['rudder_right_RC'].values, label = "With referense speed", color = "b")
+    # ax3.plot(data['time'].values, data['rudder_right_RC'].values, label = "Without referense speed", color = "r")
+    ax3.plot(data['time'].values, data['rudder_right_cmd'].values, label = "With referense speed", color = "b")
     # ax3.set_ylabel("$\delta_{\mathrm{s}}~ [\mathrm{deg.}]$", fontsize = 31)
     ax3.set_ylim(0, 120)
     ax3.set_xlim(0, len(data) / 10)

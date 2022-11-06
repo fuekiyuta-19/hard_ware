@@ -12,7 +12,7 @@ filepath = "general_python/datalist/20221102/"
 dataname = glob.glob(filepath + "*.csv")
 
 
-datanum = 0
+datanum = 5
 data = pd.read_csv(dataname[datanum])
 print(dataname[datanum])
 
@@ -120,7 +120,7 @@ ax4.plot(data['time'].values, data['velo_ms_lidar_ma'].values, color = "blue")
 ax4.plot(data['time'].values, data['vm_filter'].values, color = "r")
 ax4.set_ylabel("$v_{m}~ [\mathrm{m/s}]$", fontsize = 20)
 ax4.set_xlim(0, len(data) / 10)
-ax4.set_ylim(-0.3, 1)
+ax4.set_ylim(-0.3, 0.3)
 ax4.axhspan(-0.2, 0.011, color = "gray", alpha = 0.2, label = "$\mathrm{Safe~ Speed}$")
 ax4.axvline(x = flag, color = 'black')
 # ax4.legend(font_size = 20)
