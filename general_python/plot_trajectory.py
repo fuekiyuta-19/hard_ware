@@ -123,6 +123,7 @@ for k in range(len(dataname)):
     ax4.plot(data['time'].values, data['vm_filter'].values, color = "r")
     ax4.set_ylabel("$v_{m}~ [\mathrm{m/s}]$", fontsize = 20)
     ax4.set_xlim(0, len(data) / 10)
+    ax4.set_ylim(-0.05, 0.05)
     ax4.axhspan(-0.2, 0.011, color = "gray", alpha = 0.2, label = "$\mathrm{Safe~ Speed}$")
     ax4.axvline(x = flag, color = 'black')
     # ax4.legend(font_size = 20)
