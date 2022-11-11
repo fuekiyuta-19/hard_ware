@@ -39,7 +39,7 @@ for k in range(3):
     data2 = pd.read_csv(filepath + dataname2[k] + ".csv")
     length = max(len(data1), len(data2))
 
-    fig1 = plt.figure(figsize = (20.4, 6.6), dpi = 200, linewidth = 0, edgecolor = 'w')
+    fig1 = plt.figure(figsize = (20.4, 8.6), dpi = 200, linewidth = 0, edgecolor = 'w')
 
     ax1  = fig1.add_subplot(1, 4, 1)
     ax2  = fig1.add_subplot(3, 4, 2)
@@ -55,10 +55,10 @@ for k in range(3):
     def plot(data_x, len_lim, flag):
         if flag == 0:
             ref = "$\mathrm{Without~ referense~ speed}$"
-            col = "red"
+            col = "blue"
         else:
             ref = "$\mathrm{With~ referense~ speed}$"
-            col = "blue"
+            col = "red"
 
         ax1.plot(plottool.env()[3], plottool.env()[2], color = 'k', linestyle = "-", lw = 0.5)
         ax1.plot(plottool.env()[1], plottool.env()[0], color = 'k', linestyle = '-', lw = 0.5)
@@ -72,62 +72,60 @@ for k in range(3):
         ax1.quiver(-1.7, 3.2, -1.0, 0, color = "black",
                 angles = 'xy', scale_units = 'xy', scale = 1, label = "Wind", width = 0.012)
 
-        ax2.set_ylabel("$\delta_{\mathrm{p}}~ [\mathrm{deg.}]$", fontsize = 31)
+        ax2.set_ylabel("$\delta_{\mathrm{p}}~ [\mathrm{deg.}]$", fontsize = 25)
         ax2.plot(data_x['time'].values, data_x['left_rudder'].values, label = ref, color = col)
         ax2.set_xlim(0, len_lim/10)
         ax2.set_ylim(-100, -60)
         ax2.set_yticks([-100, -80, -60])
         ax2.legend(fontsize = 13, loc = 'upper right')
 
-        ax3.set_ylabel("$\delta_{\mathrm{s}}~ [\mathrm{deg.}]$", fontsize = 31)
+        ax3.set_ylabel("$\delta_{\mathrm{s}}~ [\mathrm{deg.}]$", fontsize = 25)
         ax3.plot(data_x['time'].values, data_x['right_rudder'].values, label = ref, color = col)
         ax3.set_ylim(60, 100)
         ax3.set_yticks([60, 80, 100])
         ax3.set_xlim(0, len_lim/10)
 
-        ax4.set_ylabel("$n_{\mathrm{bt}}~ [\mathrm{rps}]$", fontsize = 31)
+        ax4.set_ylabel("$n_{\mathrm{bt}}~ [\mathrm{rps}]$", fontsize = 25)
         ax4.plot(data_x['time'].values, data_x['bow_rps'].values, label = ref, color = col)
         # ax4.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 31)
         ax4.set_xlim(0, len_lim/10)
         ax4.set_yticks([-30, -15, 0, 15, 30])
         ax4.set_ylim(-30, 30)
 
-        ax_x.set_ylabel("$X~ [\mathrm{m}]$", fontsize = 31)
+        ax_x.set_ylabel("$X~ [\mathrm{m}]$", fontsize = 25)
         ax_x.plot(data_x['time'].values, data_x['X'].values, label = ref, color = col)
         # ax_x.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 31)
         ax_x.set_xlim(0, len_lim/10)
         # ax_x.set_yticks([-30, -15, 0, 15, 30])
         # ax_x.set_ylim(-30, 30)
 
-        ax_u.set_ylabel("$u~ [\mathrm{m/s}]$", fontsize = 31)
+        ax_u.set_ylabel("$u~ [\mathrm{m/s}]$", fontsize = 25)
         ax_u.plot(data_x['time'].values, data_x['u'].values, label = ref, color = col)
         ax_u.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 31)
         ax_u.set_xlim(0, len_lim/10)
 
-        ax_y.set_ylabel("$Y~ [\mathrm{m}]$", fontsize = 31)
+        ax_y.set_ylabel("$Y~ [\mathrm{m}]$", fontsize = 25)
         ax_y.plot(data_x['time'].values, data_x['Y'].values, label = ref, color = col)
         # ax_y.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 31)
         ax_y.set_xlim(0, len_lim/10)
 
-        ax_v.set_ylabel("$v_{m}~ [\mathrm{m/s}]$", fontsize = 31)
-        ax_v.plot(data_x['time'].values, data_x['vm'].values, label = ref, color = col)
+        ax_v.set_ylabel("$v_{m}~ [\mathrm{m/s}]$", fontsize = 25)
+        ax_v.plot(data_x['time'].values, data_x['vm'].values, color = col)
         # ax_v.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 31)
         ax_v.axhspan(-0.2, 0.011, color = "gray", alpha = 0.2, label = "$\mathrm{Safe~ Speed}$")
         ax_v.set_xlim(0, len_lim/10)
         ax_v.legend(fontsize = 13, loc = 'lower right')
 
-        ax_p.set_ylabel("$\psi~ [\mathrm{deg.}]$", fontsize = 31)
+        ax_p.set_ylabel("$\psi~ [\mathrm{deg.}]$", fontsize = 25)
         ax_p.plot(data_x['time'].values, data_x['psi'].values, label = ref, color = col)
-        ax_p.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 31)
+        ax_p.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 25)
         ax_p.set_xlim(0, len_lim/10)
         ax_p.legend(fontsize = 13, loc = 'upper right')
 
-        ax_r.set_ylabel("$r~ [\mathrm{deg./s}]$", fontsize = 31)
+        ax_r.set_ylabel("$r~ [\mathrm{deg./s}]$", fontsize = 25)
         ax_r.plot(data_x['time'].values, np.rad2deg(data_x['r'].values), label = ref, color = col)
-        ax_r.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 31)
-        ax_r.set_xlim(0, len_lim/10)
-
-    ims = []                     
+        ax_r.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 25)
+        ax_r.set_xlim(0, len_lim/10)                  
 
     def update(t):
 
@@ -148,8 +146,10 @@ for k in range(3):
             ax1.plot(Y, X-3, color = "red", linestyle = "-", lw = 0.5)
             ax2.plot(data1['time'].values[len(data1) - 1], data1['left_rudder'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
             ax2.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
+
             ax3.plot(data1['time'].values[len(data1) - 1], data1['right_rudder'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
             ax3.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
+
             ax4.plot(data1['time'].values[len(data1) - 1], data1['bow_rps'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
             ax4.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
             ax_x.plot(data1['time'].values[len(data1) - 1], data1['X'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)

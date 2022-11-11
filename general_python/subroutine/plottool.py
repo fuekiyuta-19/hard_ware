@@ -36,9 +36,10 @@ def ship_shape(x, y, psi, ship_type) : # 0:esso, 1:takaoki
     pole_theta    = np.empty(6)
     pole_r[:]     = (shipshape_Y[:] ** 2 + shipshape_X[:] ** 2) ** (1 / 2)
     pole_theta[:] = np.arctan2(shipshape_X[:], shipshape_Y[:])
+    psi_rad       = psi - np.arctan(1) * 2.0
 
-    y_fix = (np.cos(pole_theta[:] + psi) * pole_r[:]) + y
-    x_fix = (np.sin(pole_theta[:] + psi) * pole_r[:]) + x
+    y_fix = (np.cos(pole_theta[:] + psi_rad) * pole_r[:]) + y
+    x_fix = (np.sin(pole_theta[:] + psi_rad) * pole_r[:]) + x
 
     return x_fix, y_fix
 

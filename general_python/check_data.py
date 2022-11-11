@@ -8,11 +8,11 @@ import glob
 
 from subroutine import font_set, plottool
 
-filepath = "general_python/datalist/20221102/"
+filepath = "general_python/datalist/20221110/"
 dataname = glob.glob(filepath + "*.csv")
 
 
-datanum = 5
+datanum = 9
 data = pd.read_csv(dataname[datanum])
 print(dataname[datanum])
 
@@ -36,15 +36,15 @@ ax2 = fig1.add_subplot(3, 2, 2)
 ax3 = fig1.add_subplot(3, 2, 4)
 ax4 = fig1.add_subplot(3, 2, 6)
 
-for j in range(len(data)):
-    if j % 30 == 0:
-        X, Y = plottool.ship_shape(data['x_filter'].values[j], data['y_filter'].values[j], data['psi_filter'].values[j], 1)
-        # X, Y = plottool.ship_shape_dist(data['dist_m_lidar_ma'].values[j], data['psi_raw_rad'].values[j])
-        ax1.plot(X, Y, color = "r", linestyle = "-", lw = 0.5)
-    else:
-        pass
+# for j in range(len(data)):
+#     if j % 30 == 0:
+#         X, Y = plottool.ship_shape(data['x_filter'].values[j], data['y_filter'].values[j], data['psi_filter'].values[j], 1)
+#         # X, Y = plottool.ship_shape_dist(data['dist_m_lidar_ma'].values[j], data['psi_raw_rad'].values[j])
+#         ax1.plot(X, Y, color = "r", linestyle = "-", lw = 0.5)
+#     else:
+#         pass
 
-# ax1.plot(data['x_filter'].values, data['y_filter'].values)
+ax1.plot(data['x_filter'].values, data['y_filter'].values)
 ax1.plot(plottool.env()[3], plottool.env()[2], color = 'k', linestyle = "-", lw = 0.5)
 ax1.plot(plottool.env()[1], plottool.env()[0], color = 'k', linestyle = '-', lw = 0.5)
 ax1.fill_between(plottool.env()[3], plottool.env()[2], facecolor = 'k', alpha = 0.3)

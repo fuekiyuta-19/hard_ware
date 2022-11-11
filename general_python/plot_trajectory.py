@@ -6,7 +6,7 @@ from matplotlib import pyplot
 import numpy as np
 import glob
 
-from subroutine import font_set, plottool, export_csv
+from subroutine import font_set, plottool
 
 filepath = "general_python/datalist/20221110/"
 dataname = glob.glob(filepath + "*.csv")
@@ -40,7 +40,7 @@ for k in range(len(dataname)):
 
     for j in range(len(data)):
         if j % 50 == 0:
-            X, Y = plottool.ship_shape(data['y_filter'].values[j], data['x_filter'].values[j], data['psi_filter'].values[j], 1)
+            X, Y = plottool.ship_shape(data['x_filter'].values[j], data['y_filter'].values[j], np.deg2rad(data['psi_filter'].values[j]), 1)
             # X, Y = plottool.ship_shape_dist(data['dist_m_lidar_ma'].values[j], data['psi_raw_rad'].values[j])
             ax1.plot(X, Y, color = "r", linestyle = "-", lw = 0.5)
         else:
@@ -129,14 +129,14 @@ for k in range(len(dataname)):
     ax4.axvline(x = flag, color = 'black')
     # ax4.legend(font_size = 20)
 
-    ax5.plot(data['time'].values, np.rad2deg(data['psi_filter'].values), label = "Without referense speed", color = "r")
+    ax5.plot(data['time'].values, data['psi_filter'].values, label = "Without referense speed", color = "r")
     ax5.set_ylabel("$\psi~ [\mathrm{deg.}]$", fontsize = 20)
     ax5.set_xlim(0, len(data) / 10)
     ax5.set_xlabel("$t~ [\mathrm{s}]$", fontsize = 20)
     ax5.axvline(x = flag, color = 'black')
     # ax5.legend(fontsize = 17)
 
-    ax6.plot(data['time'].values, np.rad2deg(data['r_filter'].values), label = "Without referense speed", color = "r")
+    ax6.plot(data['time'].values, data['r_filter'].values, label = "Without referense speed", color = "r")
     ax6.set_ylabel("$r~ [\mathrm{deg./s}]$", fontsize = 20)
     ax6.set_xlim(0, len(data) / 10)
     ax6.axvline(x = flag, color = 'black')
