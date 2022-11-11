@@ -6,9 +6,9 @@ from matplotlib import pyplot
 import numpy as np
 import glob
 
-from subroutine import font_set, plottool
+from subroutine import font_set, plottool, export_csv
 
-filepath = "general_python/datalist/20221102/"
+filepath = "general_python/datalist/20221110/"
 dataname = glob.glob(filepath + "*.csv")
 
 for k in range(len(dataname)):
@@ -19,6 +19,7 @@ for k in range(len(dataname)):
     berth = np.full(len(data), -0.24215)
 
     flag = 0
+    x_ref = 0
     for i in range(len(data)):
         if data['automode'].values[i] == 0:
             flag += 0.1
