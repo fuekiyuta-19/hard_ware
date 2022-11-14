@@ -1,7 +1,6 @@
 import pandas as pd
 import glob
 
-
 filepath = "general_python/datalist/20221110/"
 dataname = glob.glob(filepath + "*.xlsx")
 
