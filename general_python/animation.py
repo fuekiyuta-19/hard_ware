@@ -96,9 +96,9 @@ def plot_base(data_x, len_lim, flag):
     ax1.set_yticks([-50, 50])
     ax1.set_ylim(-9.5, -1)
     ax1.set_xlabel("$Y~ [\mathrm{m}]$", fontsize = 31)
-    # ax1.text(-2.6, 2.9, "$0.6~ [\mathrm{m/s}]$", fontsize = 22)
-    # ax1.quiver(-1.7, 3.2, -1.0, 0, color = "black",
-            # angles = 'xy', scale_units = 'xy', scale = 1, label = "Wind", width = 0.012)
+    ax1.text(-2.6, -1.8, "$1.4~ [\mathrm{m/s}]$", fontsize = 22)
+    ax1.quiver(-2.55, -2.0, 1.0, 0, color = "black",
+            angles = 'xy', scale_units = 'xy', scale = 1, width = 0.012)
 
     ax2.set_ylabel("$\delta_{\mathrm{p}}~ [\mathrm{deg.}]$", fontsize = 25)
     ax2.plot(data_x['time'].values, data_x['left_rudder'].values, label = ref, color = col)
@@ -133,8 +133,8 @@ def plot_base(data_x, len_lim, flag):
     ax_u.yaxis.set_major_formatter(ptick.ScalarFormatter(useMathText=True))   # こっちを先に書くこと。
     ax_u.ticklabel_format(style="sci", axis="y", scilimits=(3,-3))   # 10^3単位の指数で表示する。
     ax_u.set_xlim(0, len_lim/10)
-    ax_u.set_ylim(-0.004, 0.0041)
-    # ax_u.set_ylim(-0.001, 0.011)
+    # ax_u.set_ylim(-0.004, 0.0041)
+    ax_u.set_ylim(-0.001, 0.011)
 
     ax_y.set_ylabel("$Y~ [\mathrm{m}]$", fontsize = 25)
     ax_y.plot(data_x['time'].values, data_x['Y'].values, color = col)
@@ -164,7 +164,12 @@ def plot_base(data_x, len_lim, flag):
     ax_r.set_xlim(0, len_lim/10)    
     ax_r.set_ylim(-1, 1)    
 
-    plt.tight_layout()              
+    plt.tight_layout()   
+
+def plot_data_line(ax_k, df_x, df_y, col, t):
+
+    ax_k.plot(df_x[t], df_y[t], marker = 'o', color =col , zorder = 10)
+    ax_k.axvline(x = df_x[t], color = col, lw = 0.3)
 
 def update(t):
 
@@ -184,137 +189,65 @@ def update(t):
         ax_p.cla()
         ax_r.cla()
         print(t + 1, " / ", length)
+
         if t >= len(data1):
             plot_base(data1, length, 1)
             X, Y = plottool.ship_shape(data1['X'].values[len(data1) - 1], data1['Y'].values[len(data1) - 1], data1['psi'].values[len(data1) - 1], 1)
             ax1.plot(Y, X-3, color = "red", linestyle = "-", lw = 0.5)
-            ax2.plot(data1['time'].values[len(data1) - 1], data1['left_rudder'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
-            ax2.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
-
-            ax3.plot(data1['time'].values[len(data1) - 1], data1['right_rudder'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
-            ax3.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
-
-            ax4.plot(data1['time'].values[len(data1) - 1], data1['bow_rps'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
-            ax4.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
-            ax_x.plot(data1['time'].values[len(data1) - 1], data1['X'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
-            ax_x.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
-            ax_u.plot(data1['time'].values[len(data1) - 1], data1['u'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
-            ax_u.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
-            ax_y.plot(data1['time'].values[len(data1) - 1], data1['Y'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
-            ax_y.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
-            ax_v.plot(data1['time'].values[len(data1) - 1], data1['vm'].values[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
-            ax_v.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
-            ax_p.plot(data1['time'].values[len(data1) - 1], heading1[len(data1) - 1], marker = 'o', color = "r", zorder = 10)
-            ax_p.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
-            ax_r.plot(data1['time'].values[len(data1) - 1], np.rad2deg(data1['r'].values[len(data1) - 1]), marker = 'o', color = "r", zorder = 10)
-            ax_r.axvline(x = data1['time'].values[len(data1) - 1], color = 'red', lw = 0.3)
+            plot_data_line(ax2,  data1['time'].values, data1['left_rudder'].values, "red", len(data1) - 1)
+            plot_data_line(ax3,  data1['time'].values, data1['right_rudder'].values, "red", len(data1) - 1)
+            plot_data_line(ax4,  data1['time'].values, data1['bow_rps'].values, "red", len(data1) - 1)
+            plot_data_line(ax_x, data1['time'].values, data1['X'].values, "red", len(data1) - 1)
+            plot_data_line(ax_u, data1['time'].values, data1['u'].values, "red", len(data1) - 1)
+            plot_data_line(ax_y, data1['time'].values, data1['Y'].values, "red", len(data1) - 1)
+            plot_data_line(ax_v, data1['time'].values, data1['vm'].values, "red", len(data1) - 1)
+            plot_data_line(ax_p, data1['time'].values, heading1, "red", len(data1) - 1)
+            plot_data_line(ax_r, data1['time'].values, np.rad2deg(data1['r'].values), "red", len(data1) - 1)
 
         else:
-
             plot_base(data1, length, 1)
             X, Y = plottool.ship_shape(data1['X'].values[t], data1['Y'].values[t], data1['psi'].values[t], 1)
             ax1.plot(Y, X-3, color = "red", linestyle = "-", lw = 0.5)
-            ax2.plot(data1['time'].values[t], data1['left_rudder'].values[t], marker = 'o', color = "r", zorder = 10)
-            ax2.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-            ax3.plot(data1['time'].values[t], data1['right_rudder'].values[t], marker = 'o', color = "r", zorder = 10)
-            ax3.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-            ax4.plot(data1['time'].values[t], data1['bow_rps'].values[t], marker = 'o', color = "r", zorder = 10)
-            ax4.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-            ax_x.plot(data1['time'].values[t], data1['X'].values[t], marker = 'o', color = "r", zorder = 10)
-            ax_x.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-            ax_u.plot(data1['time'].values[t], data1['u'].values[t], marker = 'o', color = "r", zorder = 10)
-            ax_u.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-            ax_y.plot(data1['time'].values[t], data1['Y'].values[t], marker = 'o', color = "r", zorder = 10)
-            ax_y.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-            ax_v.plot(data1['time'].values[t], data1['vm'].values[t], marker = 'o', color = "r", zorder = 10)
-            ax_v.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-            ax_p.plot(data1['time'].values[t], heading1[t], marker = 'o', color = "r", zorder = 10)
-            ax_p.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-            ax_r.plot(data1['time'].values[t], np.rad2deg(data1['r'].values[t]), marker = 'o', color = "r", zorder = 10)
-            ax_r.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-
-
+            plot_data_line(ax2,  data1['time'].values, data1['left_rudder'].values, "red", t)
+            plot_data_line(ax3,  data1['time'].values, data1['right_rudder'].values, "red", t)
+            plot_data_line(ax4,  data1['time'].values, data1['bow_rps'].values, "red", t)
+            plot_data_line(ax_x, data1['time'].values, data1['X'].values, "red", t)
+            plot_data_line(ax_u, data1['time'].values, data1['u'].values, "red", t)
+            plot_data_line(ax_y, data1['time'].values, data1['Y'].values, "red", t)
+            plot_data_line(ax_v, data1['time'].values, data1['vm'].values, "red", t)
+            plot_data_line(ax_p, data1['time'].values, heading1, "red", t)
+            plot_data_line(ax_r, data1['time'].values, np.rad2deg(data1['r'].values), "red", t)
 
         if t >= len(data2):
             plot_base(data2, length, 0)
             X, Y = plottool.ship_shape(data2['X'].values[len(data2) - 1], data2['Y'].values[len(data2) - 1], data2['psi'].values[len(data2) - 1], 1)
             ax1.plot(Y, X-7, color = "blue", linestyle = "-", lw = 0.5)
-            ax2.plot(data2['time'].values[len(data2) - 1], data2['left_rudder'].values[len(data2) - 1], marker = 'o', color = "blue", zorder = 10)
-            ax2.axvline(x = data2['time'].values[len(data2) - 1], color = 'blue', lw = 0.3)
-            ax3.plot(data2['time'].values[len(data2) - 1], data2['right_rudder'].values[len(data2) - 1], marker = 'o', color = "blue", zorder = 10)
-            ax3.axvline(x = data2['time'].values[len(data2) - 1], color = 'blue', lw = 0.3)
-            ax4.plot(data2['time'].values[len(data2) - 1], data2['bow_rps'].values[len(data2) - 1], marker = 'o', color = "blue", zorder = 10)
-            ax4.axvline(x = data2['time'].values[len(data2) - 1], color = 'blue', lw = 0.3)
-            ax_x.plot(data2['time'].values[len(data2) - 1], data2['X'].values[len(data2) - 1], marker = 'o', color = "blue", zorder = 10)
-            ax_x.axvline(x = data2['time'].values[len(data2) - 1], color = 'blue', lw = 0.3)
-            ax_u.plot(data2['time'].values[len(data2) - 1], data2['u'].values[len(data2) - 1], marker = 'o', color = "blue", zorder = 10)
-            ax_u.axvline(x = data2['time'].values[len(data2) - 1], color = 'blue', lw = 0.3)
-            ax_y.plot(data2['time'].values[len(data2) - 1], data2['Y'].values[len(data2) - 1], marker = 'o', color = "blue", zorder = 10)
-            ax_y.axvline(x = data2['time'].values[len(data2) - 1], color = 'blue', lw = 0.3)
-            ax_v.plot(data2['time'].values[len(data2) - 1], data2['vm'].values[len(data2) - 1], marker = 'o', color = "blue", zorder = 10)
-            ax_v.axvline(x = data2['time'].values[len(data2) - 1], color = 'blue', lw = 0.3)
-            ax_p.plot(data2['time'].values[len(data2) - 1], heading2[len(data2) - 1], marker = 'o', color = "blue", zorder = 10)
-            ax_p.axvline(x = data2['time'].values[len(data2) - 1], color = 'blue', lw = 0.3)
-            ax_r.plot(data2['time'].values[len(data2) - 1], np.rad2deg(data2['r'].values[len(data2) - 1]), marker = 'o', color = "blue", zorder = 10)
-            ax_r.axvline(x = data2['time'].values[len(data2) - 1], color = 'blue', lw = 0.3)
+            plot_data_line(ax2,  data2['time'].values, data2['left_rudder'].values, "blue", len(data2) - 1)
+            plot_data_line(ax3,  data2['time'].values, data2['right_rudder'].values, "blue", len(data2) - 1)
+            plot_data_line(ax4,  data2['time'].values, data2['bow_rps'].values, "blue", len(data2) - 1)
+            plot_data_line(ax_x, data2['time'].values, data2['X'].values, "blue", len(data2) - 1)
+            plot_data_line(ax_u, data2['time'].values, data2['u'].values, "blue", len(data2) - 1)
+            plot_data_line(ax_y, data2['time'].values, data2['Y'].values, "blue", len(data2) - 1)
+            plot_data_line(ax_v, data2['time'].values, data2['vm'].values, "blue", len(data2) - 1)
+            plot_data_line(ax_p, data2['time'].values, heading2, "blue", len(data2) - 1)
+            plot_data_line(ax_r, data2['time'].values, np.rad2deg(data2['r'].values), "blue", len(data2) - 1)
         
         else:
-
             plot_base(data2, length, 0)
             X, Y = plottool.ship_shape(data2['X'].values[t], data2['Y'].values[t], data2['psi'].values[t], 1)
             ax1.plot(Y, X-7, color = "blue", linestyle = "-", lw = 0.5)
-            ax2.plot(data2['time'].values[t], data2['left_rudder'].values[t], marker = 'o', color = "blue", zorder = 10)
-            ax2.axvline(x = data2['time'].values[t], color = 'blue', lw = 0.3)
-            ax3.plot(data2['time'].values[t], data2['right_rudder'].values[t], marker = 'o', color = "blue", zorder = 10)
-            ax3.axvline(x = data2['time'].values[t], color = 'blue', lw = 0.3)
-            ax4.plot(data2['time'].values[t], data2['bow_rps'].values[t], marker = 'o', color = "blue", zorder = 10)
-            ax4.axvline(x = data2['time'].values[t], color = 'blue', lw = 0.3)
-            ax_x.plot(data2['time'].values[t], data2['X'].values[t], marker = 'o', color = "blue", zorder = 10)
-            ax_x.axvline(x = data2['time'].values[t], color = 'blue', lw = 0.3)
-            ax_u.plot(data2['time'].values[t], data2['u'].values[t], marker = 'o', color = "blue", zorder = 10)
-            ax_u.axvline(x = data2['time'].values[t], color = 'blue', lw = 0.3)
-            ax_y.plot(data2['time'].values[t], data2['Y'].values[t], marker = 'o', color = "blue", zorder = 10)
-            ax_y.axvline(x = data2['time'].values[t], color = 'blue', lw = 0.3)
-            ax_v.plot(data2['time'].values[t], data2['vm'].values[t], marker = 'o', color = "blue", zorder = 10)
-            ax_v.axvline(x = data2['time'].values[t], color = 'blue', lw = 0.3)
-            ax_p.plot(data2['time'].values[t], heading2[t], marker = 'o', color = "blue", zorder = 10)
-            ax_p.axvline(x = data2['time'].values[t], color = 'blue', lw = 0.3)
-            ax_r.plot(data2['time'].values[t], np.rad2deg(data2['r'].values[t]), marker = 'o', color = "blue", zorder = 10)
-            ax_r.axvline(x = data2['time'].values[t], color = 'blue', lw = 0.3)
+            plot_data_line(ax2,  data2['time'].values, data2['left_rudder'].values, "blue", t)
+            plot_data_line(ax3,  data2['time'].values, data2['right_rudder'].values, "blue", t)
+            plot_data_line(ax4,  data2['time'].values, data2['bow_rps'].values, "blue", t)
+            plot_data_line(ax_x, data2['time'].values, data2['X'].values, "blue", t)
+            plot_data_line(ax_u, data2['time'].values, data2['u'].values, "blue", t)
+            plot_data_line(ax_y, data2['time'].values, data2['Y'].values, "blue", t)
+            plot_data_line(ax_v, data2['time'].values, data2['vm'].values, "blue", t)
+            plot_data_line(ax_p, data2['time'].values, heading2, "red", t)
+            plot_data_line(ax_r, data2['time'].values, np.rad2deg(data2['r'].values), "blue", t)
 
-
-# for t in range(len(data1)):
-#     print(t + 1, " / ", len(data1))
-#     time = t / 10                            
-#     X, Y = plottool.ship_shape(data1['X'].values[t], data1['Y'].values[t], data1['psi'].values[t], 1)
-#     im1  = ax1.plot(Y, X, color = "r", linestyle = "-", lw = 0.5)
-#     # im2  = ax2.plot(data['time'].values[t], data['rudder_left_cmd'].values[t], label = "$\mathrm{Without~ referense~ speed}$", color = "r")
-#     # im3  = ax3.plot(data['time'].values[t], data['rudder_right_cmd'].values[t], label = "Without referense speed", color = "r")
-#     # im4  = ax4.plot(data['time'].values[t], data['n_bt_rps_cmd'].values[t], label = "Without referense speed", color = "r")
-    
-#     im2  = ax2.plot(data1['time'].values[t], data1['left_rudder'].values[t], marker = 'o', color = "r", zorder = 10)
-#     im5  = ax2.axvline(x = data1['time'].values[t], color = 'red', lw = 0.3)
-#     im5  = amp.blocks.Line(X_d, Y_d, ax=ax2)
-#     im3  = ax3.plot(data1['time'].values[t], data1['right_rudder'].values[t], marker = 'o', color = "r", zorder = 10)
-#     im6  = amp.blocks.Line(X_d, Y_d, ax=ax3)
-#     im4  = ax4.plot(data1['time'].values[t], data1['bow_rps'].values[t], marker = 'o', color = "r", zorder = 10)
-#     im7  = amp.blocks.Line(X_d, Y_d, ax=ax4)
-
-#     # title = ax.text(150, 120, 'Time='+str(time)+'s')
-    
-#     ims.append(im1 + im2 + im3 + im4 + im5 + im6 + im7)
-
-# anim = FuncAnimation(fig1, update, range(length), interval=30)
 anim = FuncAnimation(fig1, update, length, interval=30)
-# anim.show()
 
 anim.save(outputpath + dataname1[k] + '.mp4', writer="ffmpeg")
 
 print("Task Finish")
-
-# ani = animation.ArtistAnimation(fig1, ims)
-
-# ani.save(outputpath + dataname1[0] + '.mp4', writer='ffmpeg', fps = 100)
-
-# rc('animation', html='jshtml')
-# print("Task Finish")
